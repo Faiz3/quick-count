@@ -5,7 +5,10 @@
                 <div class="card mt-5 border-0 shadow-sm rounded-3">
                     <div class="card-body mb-4 mt-4">
                         <h3 class="text-center mb-3">Masuk</h3>
-                        <h1 class=" text-center bi bi-file-person-fill fs-1 fw-bold mb-4 text-primary"></h1>
+                        {{-- <h1 class=" text-center bi bi-file-person-fill fs-1 fw-bold mb-4 text-primary"></h1> --}}
+                        <div class="text-center">
+                            <img src="{{asset('assets/brand/logo.jpeg')}}" alt="">
+                        </div>
                         <form wire:submit.prevent="login">
                             @csrf
                         <div class="form-floating mb-3">

@@ -101,9 +101,23 @@
               display: block !important;
             }
         </style> --}}
+        <style>
+          /* .bg-img  {
+            display: block;
+            opacity: 0.8;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: url({{asset('assets/brand/ampera-3467733806.webp')}});
+          } */
+
+          img {
+            width: 20%;
+          }
+        </style>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
         @livewireStyles
     </head>
+    @auth    
     <body class="bg-light">
         {{ $slot }}
         @livewireScripts
@@ -153,4 +167,56 @@
         {{-- <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script> --}}
 
     </body>
+    @endauth
+    @guest
+        
+    <body class="bg-light bg-img">
+      {{ $slot }}
+      @livewireScripts
+
+      {{-- sweetalert2 --}}
+      <script>
+          Livewire.on('success', data => {
+              Swal.fire({
+                  position: 'center',
+                  title: 'Berhasil!',
+                  text: data[0].pesan,
+                  icon: 'success',
+                  confirmButtonText: 'oke'
+                  // showConfirmButton: false
+                  // , timer: 1500
+              })
+          });
+          Livewire.on('error', data => {
+              Swal.fire({
+                  position: 'center',
+                  title: 'Gagal!',
+                  text: data[0].pesan,
+                  icon: 'error',
+                  confirmButtonText: 'oke'
+                  // showConfirmButton: false
+                  // , timer: 1500
+              })
+          });
+
+          livewire.on('deletes', data => {
+              Swal.fire({
+              title: "Do you want to save the changes?",
+              showDenyButton: true,
+              showCancelButton: true,
+              confirmButtonText: "Save",
+              denyButtonText: `Don't save`
+              }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                  Swal.fire("Saved!", "", "success");
+              } else if (result.isDenied) {
+                  Swal.fire("Changes are not saved", "", "info");
+              }
+              })
+          });
+      </script>
+      {{-- <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script> --}}
+  </body>
+    @endguest
 </html>
