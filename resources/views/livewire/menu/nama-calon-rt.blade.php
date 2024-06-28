@@ -205,8 +205,8 @@
                                         <td>{{ $data->no_urut ?? '-' }}</td>
                                         <td>{{ $data->jenis_kelamin ?? '-' }}</td>
                                         <td>Rt. {{ $data->keterangan ?? '-' }}</td>
-                                        <td>Rt. {{ $data->alamat ?? '-' }}</td>
-                                        <td>Rt. {{ $data->no_hp ?? '-' }}</td>
+                                        <td> {{ $data->alamat ?? '-' }}</td>
+                                        <td> {{ $data->no_hp ?? '-' }}</td>
                                         @if ($admin)
                                             <td>
                                                 <div wire:click="onUpdate('{{ $data->id }}')"
