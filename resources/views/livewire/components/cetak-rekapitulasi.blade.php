@@ -32,7 +32,9 @@
             {{-- jumlah daftar pemilih --}}
 
             @elseif($is_tambah_user)
-                @livewire('menu.tambah-user')
+                @if(auth()->user()->isAdmin)
+                    @livewire('menu.tambah-user')
+                @endif
 
             @elseif ($is_data_suara)
             {{-- data suara --}}

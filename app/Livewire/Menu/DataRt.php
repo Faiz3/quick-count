@@ -14,13 +14,14 @@ class DataRt extends Component
     public $alamat;
     public $id;
     public $take = 5;
+    
 
     public function render()
     {
         $data = ModelsDataRt::latest();
-
+        $admin = auth()->user()->isAdmin;
         $datas = $data->paginate($this->take);
-        return view('livewire.menu.data-rt', compact('datas'));
+        return view('livewire.menu.data-rt', compact('datas', 'admin'));
     }
 
     // validasi input

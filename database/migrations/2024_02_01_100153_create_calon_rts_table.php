@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('no_urut');
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->string('keterangan');
+            $table->string('foto');
+            $table->string('alamat');
+            $table->string('no_hp');
             $table->timestamps();
         });
     }

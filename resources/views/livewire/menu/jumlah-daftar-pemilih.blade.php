@@ -46,7 +46,7 @@
                             <div class="col col-sm-10">
                                 {{-- <input wire:model="no_urut" name="alamat" type="text" class="form-control"> --}}
                                 <select name="no_rt" wire:model="no_rt" class="form-control text-center">
-                                    @foreach($rt as $r)
+                                    @foreach ($rt as $r)
                                         <option value="{{ $r->no_rt }}">{{ $r->no_rt }}</option>
                                     @endforeach
                                 </select>
@@ -58,7 +58,8 @@
                         <div class="row mb-4">
                             <label for="jumlah_daftar" class="col col-sm-2 col-form-label">JUMLAH DAFTAR</label>
                             <div class="col col-sm-10">
-                                <input type="number" wire:model="jumlah_daftar" name="jumlah_daftar" type="text" class="form-control">
+                                <input type="number" wire:model="jumlah_daftar" name="jumlah_daftar" type="text"
+                                    class="form-control">
                             </div>
                         </div>
                         @error('jumlah_daftar')
@@ -73,11 +74,13 @@
             </div>
         @else
             <div class="card mt-5 shadow-sm rounded-3">
-                <div class="card-header">
-                    <div class="text-end">
-                        <div wire:click="onCreate" class="btn btn-primary">Tambah</div>
+                @if ($isAdmin)
+                    <div class="card-header">
+                        <div class="text-end">
+                            <div wire:click="onCreate" class="btn btn-primary">Tambah</div>
+                        </div>
                     </div>
-                </div>
+                @endif
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
@@ -85,7 +88,9 @@
                                 <tr>
                                     <th>No RT</th>
                                     <th>Jumlah Daftar Pemilih</th>
-                                    <th>Aksi</th>
+                                    @if ($isAdmin)
+                                        <th>Aksi</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,14 +98,20 @@
                                     <tr>
                                         <td>{{ $data->no_rt ?? '-' }}</td>
                                         <td>{{ $data->jumlah_daftar ?? '-' }}</td>
-                                        <td>
-                                            <div wire:click="onUpdate('{{ $data->id }}')" class="btn btn-primary bi bi-pencil-square"></div>
-                                            <div wire:click="delete('{{ $data->id }}')" class="btn btn-danger bi bi-trash-fill"></div>
-                                        </td>
+                                        @if ($isAdmin)
+                                            <td>
+                                                <div wire:click="onUpdate('{{ $data->id }}')"
+                                                    class="btn btn-primary bi bi-pencil-square"></div>
+                                                <div wire:click="delete('{{ $data->id }}')"
+                                                    class="btn btn-danger bi bi-trash-fill"></div>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5"><div class="text-center">Data Kosong</div></td>
+                                        <td colspan="5">
+                                            <div class="text-center">Data Kosong</div>
+                                        </td>
                                     </tr>
                                 @endforelse
                             </tbody>

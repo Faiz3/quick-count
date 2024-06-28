@@ -21,9 +21,11 @@
         <li class="nav-item">
           <a wire:click="clickFive" class="nav-link" href="#"><i class="bi bi-archive-fill me-2 fs-2"></i>Data Suara</a>
         </li>
+        @if(auth()->user()->isAdmin==true)
         <li class="nav-item">
           <a wire:click="clickSeven" class="nav-link" href="#"><i class="bi bi-people-fill me-2 fs-2"></i>Tambah User</a>
         </li>
+        @endif
         <li class="nav-item">
           <a class="nav-link {{ Request::is('app/rekap-data') ? 'active' : '' }}" href="{{ url('app/rekap-data') }}"><i class="bi bi-file-earmark-spreadsheet-fill me-2 fs-2"></i>Rekapitulasi Data Suara</a>
         </li>

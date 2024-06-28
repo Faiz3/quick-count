@@ -25,8 +25,9 @@ class JumlahDaftarPemilih extends Component
     {
         $data = DaftarPemilih::latest();
         $datas = $data->paginate($this->take);
+        $isAdmin = auth()->user()->isAdmin;
         $norts = DataRt::latest()->get();
-        return view('livewire.menu.jumlah-daftar-pemilih', compact('datas', 'norts'));
+        return view('livewire.menu.jumlah-daftar-pemilih', compact('datas', 'norts', 'isAdmin'));
     }
 
     public function mount()
@@ -36,16 +37,16 @@ class JumlahDaftarPemilih extends Component
 
     // pesan
     protected $messages = [
-        'no_rt.required'=>'Wajib diisi',
-        'no_rt.unique'=>'No RT sudah ada',
+        'no_rt.required' => 'Wajib diisi',
+        'no_rt.unique' => 'No RT sudah ada',
     ];
 
     // validasi
     public function validasi()
     {
         $this->validate([
-            'no_rt'=>'required|unique:daftar_pemilihs,no_rt',
-            'jumlah_daftar'=>'required',
+            'no_rt' => 'required|unique:daftar_pemilihs,no_rt',
+            'jumlah_daftar' => 'required',
         ]);
     }
 
@@ -58,16 +59,15 @@ class JumlahDaftarPemilih extends Component
     public function create()
     {
         $this->validasi();
-        try{
+        try {
             $data = new DaftarPemilih();
             $data->calon_rt_id = CalonRt::where('keterangan', $this->no_rt)->first()->id;
             $data->no_rt = $this->no_rt;
             $data->jumlah_daftar = $this->jumlah_daftar;
             $data->save();
-            $this->dispatch('success', ['pesan'=>'Data berhasil disimpan']);
+            $this->dispatch('success', ['pesan' => 'Data berhasil disimpan']);
             $this->is_create = !$this->is_create;
-        } catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $this->addError('no_rt', 'Tambah calon RT terlebih dahulu');
             // $this->dispatch();
         }
@@ -80,7 +80,7 @@ class JumlahDaftarPemilih extends Component
         $data->no_rt = $this->no_rt;
         $data->jumlah_daftar = $this->jumlah_daftar;
         $data->save();
-        $this->dispatch('success', ['pesan'=>'Data berhasil di update']);
+        $this->dispatch('success', ['pesan' => 'Data berhasil di update']);
         $this->is_update = !$this->is_update;
     }
 
@@ -89,7 +89,7 @@ class JumlahDaftarPemilih extends Component
     {
         $data = DaftarPemilih::find($id);
         $data->delete();
-        $this->dispatch('success', ['pesan'=>'Data berhasil dihapus']);
+        $this->dispatch('success', ['pesan' => 'Data berhasil dihapus']);
     }
 
     // on create
