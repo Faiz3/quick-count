@@ -36,7 +36,8 @@ class RekapitulasiDataSuara extends Component
         $rt = DataRt::oldest()->get();
         $datas1 = CalonRt::oldest()->get();
         $datarekaps = DataSuara::oldest()->get();
-        return view('livewire.menu.rekapitulasi-data-suara', compact('datas', 'datarekaps', 'datas1', 'rt'));
+        $isAdmin = auth()->user()->isAdmin;
+        return view('livewire.menu.rekapitulasi-data-suara', compact('datas', 'datarekaps', 'datas1', 'rt', 'isAdmin'));
     }
 
     // cetak
@@ -45,12 +46,12 @@ class RekapitulasiDataSuara extends Component
         redirect('app/cetak');
     }
 
-     // logout
-     public function logout()
-     {
-         auth()->logout();
-         redirect('/');
-     }
+    // logout
+    public function logout()
+    {
+        auth()->logout();
+        redirect('/');
+    }
 
     public function rekapData($id)
     {
